@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import ProductCard from "./components/ProductCard";
+
 
 export default function Home() {
   return (
 <main>
   <div>Hello World</div>
-  <Link href="/users">user</Link>
-  <ProductCard/>
+<Link href="/chat">Go to Chat</Link>
+  
 </main>
   );
 }
