@@ -1,4 +1,4 @@
-import pool from "../config/db"
+import pool from "../config/db.js"
 
 export const saveMessage = async(conversationId,senderId,content)=>{
    const result = await pool.query(
@@ -9,10 +9,10 @@ export const saveMessage = async(conversationId,senderId,content)=>{
    return result.rows[0]
 }
 
-export const getMessagesByConversation = async (conversationId)=>{
+export const getMessagesByConversation = async (conversationId) => {
     const result = await pool.query(
         `SELECT * FROM messages
-        WHERE conversation_id=$1
+        WHERE conversation_id=$1   
         ORDER BY created_at ASC`,
         [conversationId]
     )

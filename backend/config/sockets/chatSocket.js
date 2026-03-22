@@ -1,4 +1,4 @@
-import messageService from "../../services/messageServices"
+import messageService from "../../services/messageServices.js"
 
 export default socket  = (io)=>{
     io.on("connection",(socket)=>{

@@ -4,6 +4,7 @@ import cors from "cors";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
 dotenv.config();
+import messageRoutes from "./routes/messageRoutes.js";
 
 
 const app = express();
@@ -21,6 +22,7 @@ const io = new Server(server, {
 });
 
 
+app.use("/api/chat",messageRoutes)
 
 
 
