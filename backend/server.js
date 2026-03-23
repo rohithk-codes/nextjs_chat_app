@@ -5,13 +5,14 @@ import { Server } from "socket.io";
 import dotenv from "dotenv";
 dotenv.config();
 import messageRoutes from "./routes/messageRoutes.js";
+import {chatSocket} from "./config/sockets/chatSocket.js";
 
 
 const app = express();
 app.use(express.json());
 app.use(cors())
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 const server = http.createServer(app);
 
@@ -21,14 +22,11 @@ const io = new Server(server, {
     },
 });
 
-
 app.use("/api/chat",messageRoutes)
-
+chatSocket(io)
 
 
 server.listen(PORT,()=>{
     console.log(`Server is runnig in http://localhost:${PORT}`);
 
 })
-
-

@@ -1,20 +1,17 @@
 import pool from "../config/db.js"
 
-export const saveMessage = async(conversationId,senderId,content)=>{
-   const result = await pool.query(
-    `INSERT INTO messages(conversation_id,sender_id,content)
-    VALUES ($1,$2,$3) RETURNING *`,
-    [conversationId,senderId,content]
-   )
-   return result.rows[0]
-}
-
-export const getMessagesByConversation = async (conversationId) => {
+export const getConversationById = async (conversationId) => {
     const result = await pool.query(
-        `SELECT * FROM messages
-        WHERE conversation_id=$1   
-        ORDER BY created_at ASC`,
+        `SELECT * FROM conversations WHERE id = $1`,
         [conversationId]
     )
-    return result.rows
+    return result.rows[0] || null  
+}
+
+
+export const createConversation = async () => {
+    const result = await pool.query(
+        `INSERT INTO conversations DEFAULT VALUES RETURNING *`
+    )
+    return result.rows[0]
 }

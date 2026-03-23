@@ -1,10 +1,10 @@
-import {getMessagesByConversation,saveMessage} from "../repositories/messageRepository.js";
-export const createMessages = async (conversationId,senderId,content)=>{
-    return await  saveMessage(
-        conversationId,senderId,content
+import {getConversationById,createConversation} from "../repositories/messageRepository.js";
+export const createMessages = async (conversationId,senderId,message)=>{
+    return await  createConversation(
+        conversationId,senderId,message
     )
 }
 
-export const getMessages = async (roomId)=>{
-    return await getMessagesByConversation(roomId)
+export const getMessages = async (conversationId)=>{
+    return await getConversationById(conversationId)
 }
