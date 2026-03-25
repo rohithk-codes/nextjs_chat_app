@@ -2,10 +2,10 @@ import express from "express"
 const router = express.Router()
 
 
- import {getMessage,createMessage}  from '../controllers/messageController.js'
+ import messageController  from '../controllers/messageController.js'
 
 
-router.get('/:conversationId',getMessage)
-router.post('/',createMessage)
+router.get('/:conversationId',messageController.getMessage)
+router.post('/messages',messageController.createMessage)
 
 export default router

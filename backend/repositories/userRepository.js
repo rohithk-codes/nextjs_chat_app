@@ -1,20 +1,22 @@
-import pool from '../config/db.js'
+import pool from "../config/db.js";
 
-export const createUser = async(name,email,password)=>{
-
+class UserRepository {
+  async createUser(email, password) {
     const result = await pool.query(
-        `INSERT INTO users(name,email,password) 
-        VALUES ($1,$2,$3) RETURNING *`,
-        [name,email,password]
-    )
-    return result.rows[0]
+      `INSERT INTO users(name,email,password) 
+        VALUES ($1,$2) RETURNING *`,
+      [email, password],
+    );
+    return result.rows[0];
+  }
+
+  async FindUserByEmail(email) {
+    const result = await pool.query(`SELECT * FROM users WHERE email=$1`, [
+      email,
+    ]);
+    return result.rows[0];
+  }
 }
 
 
-export const FindUserByEmail = async(email)=>{
-    const result = await pool.query(
-        `SELECT * FROM users WHERE email=$1`,
-        [email]
-    )
-    return result.rows[0]
-}
+export default new UserRepository()
