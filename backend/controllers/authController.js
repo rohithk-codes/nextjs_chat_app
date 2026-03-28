@@ -20,13 +20,48 @@ class AuthController {
             sameSite: "strict",
             maxAge: 60 * 60 * 1000, 
           });
-          res.status(201).json({success:true, user });
+          res.status(201).json({success:true,message: "User registered successfully", user });
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
 
          
     }
-    
+
+
+    login = async(req,res)=>{
+
+        try {
+            const {email,password} = req.body
+          const {accessToken,refreshToken,user} = await authService.login(email,password)       
+
+         res.cookie("refreshToken", refreshToken, { 
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",      
+            sameSite: "strict",       
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+          });
+          res.cookie("accessToken", accessToken, {  
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",      
+            sameSite: "strict",
+            maxAge: 60 * 60 * 1000,
+          });
+          res.status(200).json({success:true,message: "User logged in successfully", user });
+        } catch (error) {
+            res.status(400).json({ error: error.message }); 
+
+        }
+      }
+      
+      logout = (req,res)=>{     
+        res.clearCookie("refreshToken");
+        res.clearCookie("accessToken");
+        res.status(200).json({success:true,message: "User logged out successfully" });
+      }
+
 
 }
+
+
+export default new AuthController();
